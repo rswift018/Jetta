@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var db = mongoose.connect('mongodb://localhost/sample-app');
 
 var User = require('./models/user');
+var Group = require('./models/group');
 
 var app = express();
 
@@ -30,6 +31,29 @@ app.post('/user', function(req, res) {
            res.status(500).send({error:"Could not save User"});
        } else {
            res.send(savedUser);
+       }
+    });
+});
+
+app.get('/group', function(req, res) {
+    Group.find({},function(err, groups) {
+        if (err) {
+            res.status(500).send({error: "Could not fetch groups"});
+        } else {
+            res.send(groups);
+        }
+    });
+});
+
+app.post('/group', function(req, res) {
+    var group = new Group();
+    group.title = req.body.title;
+    group.description = req.body.description;
+    group.save(function(err, savedGroup) {
+       if (err) {
+           res.status(500).send({error:"Could not save Group"});
+       } else {
+           res.send(savedGroup);
        }
     });
 });

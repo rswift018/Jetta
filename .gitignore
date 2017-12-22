@@ -1,2 +1,6 @@
 
 sample-app-api/node_modules/
+
+\.idea/
+
+sample-app-web/package-lock\.json
